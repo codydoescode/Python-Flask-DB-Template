@@ -25,9 +25,12 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:latest .
+          repo_build="ghcr.io/${{ github.repository_owner }}/$(echo '${{ github.event.repository.name }}' | tr '[:upper:]' '[:lower:]')"
+          docker build -t "$repo_build:latest" .
 
       - name: Push Docker image
         run: |
-          docker push ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:latest
+          repo_push="ghcr.io/${{ github.repository_owner }}/$(echo '${{ github.event.repository.name }}' | tr '[:upper:]' '[:lower:]')"
+          docker push "$repo_push:latest"
+      
 
